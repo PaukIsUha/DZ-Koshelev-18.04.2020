@@ -1,0 +1,51 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+int randoms[10] = {1 , 7 ,20, 39, 55, 63, 89, 1121, 5, 555};
+
+int MyRandom(int a, int b) 
+{
+	int index = (a * b / 7 + 28 * 252) % 10;
+	int value = randoms[index];
+	return value % (b - a) + a + 1;
+}
+
+int main() 
+{
+	string str;
+	getline(cin, str);
+	vector<bool> bits(str.length() + 1);
+	for (int i = 0; i < str.length(); ++i)
+		if (str[i] == '0')
+			bits[i] = false;
+		else
+			bits[i] = true;
+	bool result = 0;
+	for (int i = 0; i < str.length(); ++i)
+		result = result ^ bits[i];
+	bits[str.length()] = result;
+
+	int crashedDisk = MyRandom(0, str.length());
+	cout << "crashed disk is " << crashedDisk << endl;
+	for (int i = 0; i < str.length(); ++i)
+		if (i == crashedDisk)
+			cout << "X";
+		else
+			cout << bits[i];
+	cout << endl;
+
+	// Process
+
+	for (int i = 0; i < str.length(); ++i)
+		result = result ^ bits[i];
+	if (result != bits[str.length()])
+		bits[crashedDisk] = 1;
+	else
+		bits[crashedDisk] = 0;
+	cout << "Fixed:\n";
+	for (int i = 0; i < str.length(); ++i)
+		cout << bits[i];
+	return 0;
+}
