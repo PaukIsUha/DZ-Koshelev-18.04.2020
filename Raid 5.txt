@@ -39,7 +39,8 @@ int main()
 	// Process
 
 	for (int i = 0; i < str.length(); ++i)
-		result = result ^ bits[i];
+		if(i != crashedDisk)
+			result = result ^ bits[i];
 	if (result != bits[str.length()])
 		bits[crashedDisk] = 1;
 	else
